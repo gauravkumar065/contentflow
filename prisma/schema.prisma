@@ -1,0 +1,107 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model user {
+  id                    Int                @id @default(autoincrement())
+  createdAt             DateTime           @default(now())
+  email                 String             @unique
+  firstName             String?
+  lastName              String?
+  gender                String?
+  profileImageUrl       String?
+  userId                String             @unique
+  subscription          String?
+  stripeCustomerId      String?            @unique
+  subscriptionPlan      SubscriptionPlan   @default(FREE)
+  subscriptionStatus    SubscriptionStatus @default(ACTIVE)
+  subscriptionStartDate DateTime?
+  subscriptionEndDate   DateTime?
+  cancelAtPeriodEnd     Boolean            @default(false)
+  lastBillingDate       DateTime?
+  updatedAt             DateTime           @updatedAt
+  ideas                 Idea[]
+}
+
+model Idea {
+  id           String         @id @default(uuid())
+  userId       Int
+  user         user           @relation(fields: [userId], references: [id])
+  title        String
+  description  String
+  progress     Float
+  type         String
+  status       IdeaStatus     @default(NEW)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  scripts      Script[]
+  resources    Resource[]
+  aiContent    AIContent?
+}
+
+model Script {
+  id        String   @id @default(uuid())
+  ideaId    String
+  idea      Idea     @relation(fields: [ideaId], references: [id])
+  version   String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Resource {
+  id        String       @id @default(uuid())
+  ideaId    String
+  idea      Idea         @relation(fields: [ideaId], references: [id])
+  type      ResourceType
+  url       String
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+}
+
+model AIContent {
+  id                    String   @id @default(uuid())
+  ideaId                String   @unique
+  idea                  Idea     @relation(fields: [ideaId], references: [id])
+  twitterPost           String
+  instagramPost         String
+  hashtags              String[]
+  blogPost              String
+  youtubeCommunityPost  String
+  youtubeTitle          String
+  youtubeDescription    String
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+enum IdeaStatus {
+  NEW
+  DO_TODAY
+  IN_PROGRESS
+  PUBLISHED
+}
+
+enum ResourceType {
+  BRAND_LINK
+  MERCHANT
+  REFERRAL_LINK
+  SOCIAL_MEDIA
+}
+
+enum SubscriptionPlan {
+  FREE
+  PREMIUM
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELED
+  PAST_DUE
+  UNPAID
+}
