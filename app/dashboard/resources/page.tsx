@@ -1,181 +1,136 @@
 "use client";
-import React, { useState } from "react";
-import { Search, ChevronDown, Maximize2 } from "lucide-react";
+import { useState } from "react";
+import {
+  Copy,
+  Check,
+  Link,
+  Hash,
+  ShoppingBag,
+  Users,
+  Share2,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Textarea } from "@/components/ui/textarea";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
-const ScreenwritingApp = () => {
-  const [scriptContent, setScriptContent] = useState(`11
+// Mock data for resources
+const resources = [
+  {
+    id: 1,
+    title: "Brand Collaboration",
+    description: "Exciting partnership opportunity with a leading brand.",
+    type: "BRAND_LINK",
+    links: ["https://brand.com/collab1", "https://brand.com/collab2"],
+  },
+  {
+    id: 2,
+    title: "Merchant Spotlight",
+    description: "Featured products from our top merchants.",
+    type: "MERCHANT",
+    links: ["https://merchant1.com", "https://merchant2.com"],
+  },
+  {
+    id: 3,
+    title: "Referral Program",
+    description: "Earn rewards by referring friends to our platform.",
+    type: "REFERRAL_LINK",
+    links: ["https://refer.com/program1", "https://refer.com/program2"],
+  },
+  {
+    id: 4,
+    title: "Social Media Campaign",
+    description:
+      "Join our latest social media challenge and increase engagement.",
+    type: "SOCIAL_MEDIA",
+    links: ["https://instagram.com/campaign", "https://twitter.com/campaign"],
+  },
+  {
+    id: 5,
+    title: "Trending Hashtags",
+    description: "Boost your content visibility with these popular hashtags.",
+    type: "Hashtags",
+    links: ["#TrendingNow", "#ViralContent", "#InstaFamous"],
+  },
+];
 
-JOHN
-Well, one can't have everything.
-
-CUT TO:
-
-EXT. JOHN AND MARY'S HOUSE - CONTINUOUS
-An old car pulls up to the curb and a few KNOCKS as the engine shuts down.
-
-MIKE steps out of the car and walks up to the front door. He rings the doorbell.
-
-BACK TO:
-
-INT. KITCHEN - CONTINUOUS
-
-JOHN
-Who on Earth could that be?
-
-MARY
-I'll go and see
-
-Mary gets up and walks out.
-
-The front door lock CLICKS door CREAKS a little as its opened.`);
-
-  const [activeFormat, setActiveFormat] = useState("Action");
-
-  const handleFormatClick = (format: any) => {
-    setActiveFormat(format);
-    // In a real application, you would apply the formatting to the selected text here
-  };
-
-  const handleScriptChange = (e: any) => {
-    setScriptContent(e.target.value);
-  };
-
-  const formatButtons = [
-    "Heading",
-    "Action",
-    "Character",
-    "Parenthetical",
-    "Dialogue",
-    "Transition",
-  ];
-
-  return (
-    <div className="flex h-screen flex-col bg-gray-100">
-      {/* Header */}
-      <header className="flex items-center justify-between border-b bg-white p-4">
-        <div className="flex items-center space-x-4">
-          <span className="text-gray-500">Projects /</span>
-          <span className="text-gray-500">Into the wild /</span>
-          <span className="font-semibold">Scripts</span>
-        </div>
-        <div className="relative">
-          <Input
-            type="search"
-            placeholder="Search"
-            className="rounded-md py-2 pl-8 pr-4"
-          />
-          <Search className="absolute left-2 top-2.5 h-5 w-5 text-gray-400" />
-        </div>
-      </header>
-
-      {/* Main content */}
-      <div className="flex flex-1 overflow-hidden">
-        {/* Left panel */}
-        <div className="w-2/3 overflow-auto p-4">
-          <div className="rounded-lg bg-white p-4 shadow">
-            <div className="mb-4 flex space-x-2 overflow-x-auto">
-              {formatButtons.map((format) => (
-                <Button
-                  key={format}
-                  variant="outline"
-                  className={activeFormat === format ? "bg-blue-100" : ""}
-                  onClick={() => handleFormatClick(format)}
-                >
-                  {format}
-                </Button>
-              ))}
-              <Button variant="outline">
-                More <ChevronDown className="ml-1 h-4 w-4" />
-              </Button>
-            </div>
-            <Textarea
-              value={scriptContent}
-              onChange={handleScriptChange}
-              className="h-[calc(100vh-250px)] w-full resize-none font-mono"
-            />
-          </div>
-        </div>
-
-        {/* Right panel */}
-        <div className="w-1/3 space-y-4 overflow-auto p-4">
-          {["INT. HOME - NIGHT", "INT. HOME - NIGHT", "INT. HOME - NIGHT"].map(
-            (title, index) => (
-              <Card
-                key={index}
-                className={`border-l-4 ${
-                  index === 0
-                    ? "border-l-red-500"
-                    : index === 1
-                      ? "border-l-purple-500"
-                      : "border-l-green-500"
-                }`}
-              >
-                <CardHeader className="p-2 text-xs text-gray-500">
-                  {title}
-                </CardHeader>
-                <CardContent className="p-2">
-                  <p className="text-sm">
-                    An old car pulls up to the curb and ...
-                  </p>
-                </CardContent>
-              </Card>
-            ),
-          )}
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-500">Page 1 (1/8 Page)</span>
-            <Button variant="outline" size="sm">
-              Show
-            </Button>
-          </div>
-          <div className="space-y-2">
-            {["Format", "Characters", "Locations", "Other"].map(
-              (item, index) => (
-                <Button
-                  key={item}
-                  variant="outline"
-                  className={`w-full justify-start ${
-                    index === 1 ? "bg-gray-100" : ""
-                  }`}
-                >
-                  {item}
-                </Button>
-              ),
-            )}
-          </div>
-          <div className="space-y-2">
-            {[
-              { name: "Kathryn Murphy", username: "pointingaxis" },
-              { name: "Guy Hawkins", username: "daylighttouch" },
-              { name: "Elaine Richards", username: "carriermorse" },
-              { name: "Jessica M", username: "carriermorse" },
-            ].map((user, index) => (
-              <div key={index} className="flex items-center space-x-2">
-                <Avatar>
-                  <AvatarFallback>{user.name[0]}</AvatarFallback>
-                </Avatar>
-                <div>
-                  <p className="text-sm font-semibold">{user.name}</p>
-                  <p className="text-xs text-gray-500">{user.username}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Footer */}
-      <footer className="flex justify-end bg-white p-2">
-        <Button variant="ghost" size="icon">
-          <Maximize2 className="h-4 w-4" />
-        </Button>
-      </footer>
-    </div>
-  );
+const getIconForType = (type) => {
+  switch (type) {
+    case "BRAND_LINK":
+      return <Link className="h-4 w-4" />;
+    case "MERCHANT":
+      return <ShoppingBag className="h-4 w-4" />;
+    case "REFERRAL_LINK":
+      return <Users className="h-4 w-4" />;
+    case "SOCIAL_MEDIA":
+      return <Share2 className="h-4 w-4" />;
+    case "Hashtags":
+      return <Hash className="h-4 w-4" />;
+    default:
+      return <Link className="h-4 w-4" />;
+  }
 };
 
-export default ScreenwritingApp;
+export default function Component() {
+  const [copiedStates, setCopiedStates] = useState({});
+
+  const handleCopy = (text, id) => {
+    navigator.clipboard.writeText(text);
+    setCopiedStates({ ...copiedStates, [id]: true });
+    setTimeout(() => {
+      setCopiedStates({ ...copiedStates, [id]: false });
+    }, 2000);
+  };
+
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="mb-6 text-3xl font-bold">Resource Page</h1>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {resources.map((resource) => (
+          <Card key={resource.id} className="overflow-hidden">
+            <CardHeader className="pb-4">
+              <div className="flex items-start justify-between">
+                <CardTitle className="text-xl">{resource.title}</CardTitle>
+                <Badge variant="secondary" className="flex items-center gap-1">
+                  {getIconForType(resource.type)}
+                  {resource.type}
+                </Badge>
+              </div>
+              <CardDescription>{resource.description}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                {resource.links.map((link, index) => (
+                  <div
+                    key={index}
+                    className="bg-muted flex items-center justify-between rounded-md p-2"
+                  >
+                    <span className="mr-2 flex-1 truncate text-sm">{link}</span>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() =>
+                        handleCopy(link, `${resource.id}-${index}`)
+                      }
+                    >
+                      {copiedStates[`${resource.id}-${index}`] ? (
+                        <Check className="h-4 w-4 text-green-500" />
+                      ) : (
+                        <Copy className="h-4 w-4" />
+                      )}
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
+}
