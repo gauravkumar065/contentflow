@@ -34,16 +34,16 @@ const Task: React.FC<TaskProps> = ({ task, index }) => {
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
-              className="mb-4 bg-white shadow-sm hover:shadow-md transition-shadow duration-200"
+              className="mb-4 bg-white shadow-sm transition-shadow duration-200 hover:shadow-md dark:bg-black"
             >
               <CardHeader>
-                <CardTitle className="text-sm font-medium text-gray-700">
+                <CardTitle className="text-sm font-medium text-gray-700 dark:text-white">
                   {task.content}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <CustomProgress value={task.progress} className="mb-2" />
-                <div className="flex justify-between items-center mt-2">
+                <div className="mt-2 flex items-center justify-between">
                   <div className="flex items-center space-x-1">
                     <span className="text-xs text-gray-500">18</span>
                     <span className="text-xs text-gray-500">7</span>

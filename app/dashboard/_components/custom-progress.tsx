@@ -1,11 +1,19 @@
 // src/components/CustomProgress.tsx
 import React from "react";
+import { useTheme } from "next-themes";
 
 const getProgressColor = (progress: number): string => {
-  if (progress <= 25) return "bg-[#776AE3]";
-  if (progress <= 50) return "bg-[#FBFF67]";
-  if (progress <= 75) return "bg-[#FFB44A]";
-  return "bg-[#88E570]";
+  if (progress <= 25) return "bg-[#E11D47]";
+  if (progress <= 50) return "bg-[#FBBF23]";
+  if (progress <= 75) return "bg-[#2463EB]";
+  return "bg-[#289D90]";
+};
+
+const getProgressDarkColor = (progress: number): string => {
+  if (progress <= 25) return "bg-[#E2366F]"; // red
+  if (progress <= 50) return "bg-[#E78D2F]"; // orange
+  if (progress <= 75) return "bg-[#2761D8]"; // blue
+  return "bg-[#2DB78A]"; // green
 };
 
 interface CustomProgressProps {
@@ -18,11 +26,13 @@ const CustomProgress: React.FC<CustomProgressProps> = ({
   className = "",
 }) => {
   const color = getProgressColor(value);
+  const darkColor = getProgressDarkColor(value);
+  const { theme, setTheme } = useTheme();
 
   return (
-    <div className={`w-full bg-gray-200 rounded-full h-2.5 ${className}`}>
+    <div className={`h-2.5 w-full rounded-full bg-gray-200 ${className}`}>
       <div
-        className={`h-2.5 rounded-full ${color}`}
+        className={`h-2.5 rounded-full ${theme == "light" ? color : darkColor}`}
         style={{ width: `${value}%` }}
       ></div>
     </div>
