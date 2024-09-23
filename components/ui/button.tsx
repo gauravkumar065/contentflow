@@ -13,8 +13,7 @@ const buttonVariants = cva(
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
           "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        secondary: "bg-[#6A00F4] text-white hover:bg-[#6A00F4]/80 ",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         expandIcon:
@@ -43,7 +42,7 @@ const buttonVariants = cva(
       variant: "default",
       size: "default",
     },
-  }
+  },
 );
 
 interface IconProps {
@@ -78,7 +77,7 @@ const Button = React.forwardRef<
       iconPlacement,
       ...props
     },
-    ref
+    ref,
   ) => {
     const Comp = asChild ? Slot : "button";
     return (
@@ -88,7 +87,7 @@ const Button = React.forwardRef<
         {...props}
       >
         {Icon && iconPlacement === "left" && (
-          <div className="w-0 translate-x-[0%] pr-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-100 group-hover:pr-2 group-hover:opacity-100">
+          <div className="group-hover:translate-x-100 w-0 translate-x-[0%] pr-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:pr-2 group-hover:opacity-100">
             <Icon />
           </div>
         )}
@@ -100,7 +99,7 @@ const Button = React.forwardRef<
         )}
       </Comp>
     );
-  }
+  },
 );
 Button.displayName = "Button";
 

@@ -17,7 +17,9 @@ const Column: React.FC<ColumnProps> = ({ column }) => {
           ref={provided.innerRef}
           className={`rounded-lg bg-gray-100 p-4 shadow dark:bg-gray-800`}
         >
-          <h2 className="mb-4 font-semibold text-gray-800">{column.title}</h2>
+          <h2 className="mb-4 font-semibold text-gray-800 dark:text-white">
+            {column.title}
+          </h2>
           {column.tasks.map((task, index) => (
             <Task key={task.id} task={task} index={index} />
           ))}

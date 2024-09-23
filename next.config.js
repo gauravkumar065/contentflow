@@ -26,6 +26,12 @@ const nextConfig = {
       hostname: 'utfs.io',
       port: '',
       pathname: '/**'
+    },
+    {
+      protocol: 'https',
+      hostname: 'img.icons8.com',
+      port: '',
+      pathname: '/**'
     }]
   }
 };
