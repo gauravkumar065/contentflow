@@ -195,25 +195,6 @@ export default function EnhancedScriptWriter() {
     setContent(`${scriptTemplates[value as keyof typeof scriptTemplates]}`);
   };
 
-  const insertFormatting = (type: string) => {
-    let insertion = "";
-    switch (type) {
-      case "heading":
-        insertion = "# Heading\n";
-        break;
-      case "quote":
-        insertion = "> Quote\n";
-        break;
-      case "paragraph":
-        insertion = "\nNew paragraph\n";
-        break;
-      case "component":
-        insertion = "[[Component]]\n";
-        break;
-    }
-    setContent((prevContent) => prevContent + insertion);
-  };
-
   const changeVersion = (direction: "prev" | "next") => {
     if (!currentScriptId) return;
 

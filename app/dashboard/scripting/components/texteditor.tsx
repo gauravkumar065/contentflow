@@ -138,9 +138,7 @@ export default ({ content }: { content: any }) => {
   return (
     <>
       <MenuBar editor={editor} />
-      <Card className="h-auto border border-gray-300">
-        {" "}
-        {/* Added Tailwind classes */}
+      <Card className="h-auto border border-gray-300 text-center">
         <EditorContent editor={editor} />
       </Card>
     </>
