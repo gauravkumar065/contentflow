@@ -108,7 +108,7 @@ const allResources = [
   },
 ];
 
-const getIconForType = (type) => {
+const getIconForType = (type: any) => {
   switch (type) {
     case "BRAND_LINK":
       return <Link className="h-4 w-4" />;
@@ -127,9 +127,9 @@ const getIconForType = (type) => {
 
 export default function Component() {
   const [selectedIdea, setSelectedIdea] = useState("all");
-  const [copiedStates, setCopiedStates] = useState({});
+  const [copiedStates, setCopiedStates]: any = useState({});
 
-  const handleCopy = (text, id) => {
+  const handleCopy = (text: string, id: string) => {
     navigator.clipboard.writeText(text);
     setCopiedStates({ ...copiedStates, [id]: true });
     setTimeout(() => {
@@ -140,11 +140,7 @@ export default function Component() {
   const handleCopyAll = (resource: any) => {
     const allLinks = resource.links.join("\n");
     navigator.clipboard.writeText(allLinks);
-    toast({
-      title: "All links copied",
-      description:
-        "All links for this resource have been copied to your clipboard.",
-    });
+    toast("All links for this resource have been copied to your clipboard.");
   };
 
   const filteredResources =

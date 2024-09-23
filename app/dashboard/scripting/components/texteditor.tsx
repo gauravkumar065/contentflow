@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import React, { useEffect } from "react";
 import { Card } from "@/components/ui/card"; // Import the Card component
 
-const MenuBar = ({ editor }) => {
+const MenuBar = ({ editor }: { editor: any }) => {
   if (!editor) {
     return null;
   }
