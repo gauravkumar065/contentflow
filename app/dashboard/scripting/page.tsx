@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -29,6 +29,9 @@ import {
   ChevronUp,
 } from "lucide-react";
 import Tiptap from "./components/texteditor";
+import { Slider } from "@/components/ui/slider";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { PlayIcon, PauseIcon, RotateCcwIcon } from "lucide-react";
 
 const scriptTemplates = {
   "youtube-shorts": `
@@ -218,6 +221,125 @@ export default function EnhancedScriptWriter() {
     }));
   };
 
+  function ScriptReader() {
+    const [text, setText] = useState(
+      `1	​​INT. CITY STREET - DAY	1
+	"SARAH, a fiercely independent career woman, walks down the busy street with a focused expression. She holds a coffee cup in one hand and a smartphone in the other, checking emails as she walks."	
+		
+2	INT. OFFICE BUILDING - DAY	2
+	"Sarah exits the elevator and walks towards her office. She passes coworkers who smile and say hello, but Sarah is too busy to notice."	
+		
+3	INT. SARAH'S OFFICE - DAY	3
+	"Sarah sits at her desk, typing furiously on her computer. Her office is immaculate, with awards and certificates adorning the walls."	
+		
+4	INT. COFFEE SHOP - DAY	4
+	"Sarah stands in line, waiting to order her lunch. Suddenly, she bumps into DANIEL, a charming and carefree man who smiles at her."	
+`,
+    );
+    const [currentLineIndex, setCurrentLineIndex] = useState(0);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [speed, setSpeed] = useState(60); // lines per minute
+    const lines = text
+      .repeat(5)
+      .split("\n")
+      .filter((line) => line.trim() !== "");
+    const intervalRef: any = useRef(null);
+    const scrollAreaRef: any = useRef(null);
+
+    useEffect(() => {
+      if (isPlaying) {
+        intervalRef.current = setInterval(() => {
+          setCurrentLineIndex((prevIndex) => {
+            if (prevIndex >= lines.length - 1) {
+              clearInterval(intervalRef.current);
+              setIsPlaying(false);
+              return prevIndex;
+            }
+            return prevIndex + 1;
+          });
+        }, 60000 / speed);
+      } else {
+        clearInterval(intervalRef.current);
+      }
+
+      return () => clearInterval(intervalRef.current);
+    }, [isPlaying, speed, lines.length]);
+
+    useEffect(() => {
+      if (scrollAreaRef.current) {
+        const container: any = scrollAreaRef.current;
+        const highlightedLine = container.querySelector(".highlighted");
+        if (highlightedLine) {
+          highlightedLine.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        }
+      }
+    }, [currentLineIndex]);
+
+    const togglePlayPause = () => {
+      setIsPlaying(!isPlaying);
+    };
+
+    const resetReader = () => {
+      setCurrentLineIndex(0);
+      setIsPlaying(false);
+      if (scrollAreaRef.current) {
+        scrollAreaRef.current.scrollTop = 0;
+      }
+    };
+
+    return (
+      <div className="mx-auto flex h-full max-w-2xl flex-col p-4">
+        <div className="mb-6 h-[60vh] flex-grow">
+          <ScrollArea ref={scrollAreaRef} className="h-full">
+            <div className="p-4 text-lg">
+              {lines.map((line, index) => (
+                <div
+                  key={index}
+                  className={`px-4 py-2 transition-all duration-300 ease-in-out ${
+                    index === currentLineIndex
+                      ? "highlighted rounded bg-yellow-300 font-medium text-black"
+                      : "text-gray-700 blur-[1px]"
+                  }`}
+                >
+                  {line}
+                </div>
+              ))}
+            </div>
+          </ScrollArea>
+        </div>
+
+        <div className="mt-auto">
+          <div className="mb-4 flex items-center justify-between">
+            <Button onClick={togglePlayPause} variant="outline" size="icon">
+              {isPlaying ? (
+                <PauseIcon className="h-4 w-4" />
+              ) : (
+                <PlayIcon className="h-4 w-4" />
+              )}
+            </Button>
+            <Button onClick={resetReader} variant="outline" size="icon">
+              <RotateCcwIcon className="h-4 w-4" />
+            </Button>
+            <div className="flex items-center space-x-2">
+              <span className="text-sm font-medium">Speed: {speed} lpm</span>
+              <Slider
+                value={[speed]}
+                onValueChange={(value) => setSpeed(value[0])}
+                min={10}
+                max={120}
+                step={5}
+                className="w-32"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const currentScript = currentScriptId
     ? scripts.find((s) => s.id === currentScriptId)
     : null;
@@ -344,6 +466,16 @@ export default function EnhancedScriptWriter() {
                 <ChevronRight className="h-4 w-4" />
               </Button>
             </div>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline">Open Script Reader</Button>
+              </DialogTrigger>
+              <DialogContent className="flex h-[95vh] w-[80vw] flex-col sm:max-h-[90vh] sm:max-w-[90vw]">
+                <div className="flex-grow overflow-y-auto p-6">
+                  <ScriptReader />
+                </div>
+              </DialogContent>
+            </Dialog>
             <Button onClick={saveCurrentScript}>Save</Button>
           </div>
         </div>
