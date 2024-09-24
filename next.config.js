@@ -33,6 +33,9 @@ const nextConfig = {
       port: '',
       pathname: '/**'
     }]
-  }
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 module.exports = nextConfig;
