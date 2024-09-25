@@ -32,7 +32,14 @@ const nextConfig = {
       hostname: 'img.icons8.com',
       port: '',
       pathname: '/**'
-    }]
+    },
+    {
+      protocol: 'https',
+      hostname: 'nruhnevvqgdhoxxaauxi.supabase.co',
+      port: '',
+      pathname: '/**'
+    }
+  ]
   },
   eslint: {
     ignoreDuringBuilds: true,

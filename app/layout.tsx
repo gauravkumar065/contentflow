@@ -8,28 +8,28 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://starter.rasmic.xyz"),
+  metadataBase: new URL("https://contentflow-iota.vercel.app/"),
   title: {
-    default: "Nextjs Starter Kit",
-    template: `%s | Nextjs Starter Kit`,
+    default: "Content Flow",
+    template: `%s | Content Flow`,
   },
   description:
-    "The Ultimate Nextjs 14 Starter Kit for quickly building your SaaS, giving you time to focus on what really matters",
+    "Streamline your content creation workflow from ideation to production with AI-powered idea management and script writing",
   openGraph: {
     description:
-      "The Ultimate Nextjs 14 Starter Kit for quickly building your SaaS, giving you time to focus on what really matters",
+      "Revolutionize your content creation process with Content Flow - AI-powered idea management and script writing for efficient workflows",
     images: [
       "https://utfs.io/f/8a428f85-ae83-4ca7-9237-6f8b65411293-eun6ii.png",
     ],
-    url: "https://starter.rasmic.xyz/",
+    url: "https://contentflow-iota.vercel.app/",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nextjs Starter Kit",
+    title: "Content Flow - Streamline Your Content Creation",
     description:
-      "The Ultimate Nextjs 14 Starter Kit for quickly building your SaaS, giving you time to focus on what really matters",
+      "Elevate your content creation with AI-powered idea management and script writing. From ideation to production, all in one place.",
     siteId: "",
-    creator: "@rasmic",
+    creator: "@contentflow",
     creatorId: "",
     images: [
       "https://utfs.io/f/8a428f85-ae83-4ca7-9237-6f8b65411293-eun6ii.png",

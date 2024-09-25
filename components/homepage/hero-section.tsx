@@ -1,11 +1,25 @@
+"use client";
 import { ArrowRight, Github } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { BorderBeam } from "../magicui/border-beam";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { TITLE_TAILWIND_CLASS } from "@/utils/constants";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 export default function HeroSection() {
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  const plugin = Autoplay({ delay: 2000, stopOnInteraction: false });
   return (
     <section
       className="mt-[3rem] flex flex-col items-center justify-center leading-6"
@@ -29,22 +43,92 @@ export default function HeroSection() {
       <div>
         <div className="relative mt-7 flex max-w-6xl justify-center overflow-hidden">
           <div className="relative rounded-xl">
-            <Image
-              src="https://utfs.io/f/31dba2ff-6c3b-4927-99cd-b928eaa54d5f-5w20ij.png"
-              alt="Nextjs Starter Kit Dashboard Preview"
-              width={1100}
-              height={550}
-              priority={true}
-              className="block rounded-[inherit] border object-contain shadow-lg dark:hidden"
-            />
-            <Image
-              src="https://utfs.io/f/69a12ab1-4d57-4913-90f9-38c6aca6c373-1txg2.png"
-              width={1100}
-              height={550}
-              alt="Nextjs Starter Kit Dark Mode Dashboard Preview"
-              priority={true}
-              className="hidden rounded-[inherit] border object-contain shadow-lg dark:block"
-            />
+            {isClient && (
+              <Carousel
+                plugins={[plugin]}
+                className="w-full max-w-6xl"
+                opts={{
+                  align: "start",
+                  loop: true,
+                }}
+              >
+                <CarouselContent>
+                  <CarouselItem>
+                    <Image
+                      src="https://nruhnevvqgdhoxxaauxi.supabase.co/storage/v1/object/public/images/Screenshot%202024-09-25%20at%2010.03.34%20AM.png"
+                      alt="Nextjs Starter Kit Dashboard Preview"
+                      width={1100}
+                      height={550}
+                      priority={true}
+                      className="block rounded-[inherit] border object-contain shadow-lg dark:hidden"
+                    />
+                    <Image
+                      src="https://nruhnevvqgdhoxxaauxi.supabase.co/storage/v1/object/public/images/Screenshot%202024-09-25%20at%2010.03.24%20AM.png"
+                      width={1100}
+                      height={550}
+                      alt="Nextjs Starter Kit Dark Mode Dashboard Preview"
+                      priority={true}
+                      className="hidden rounded-[inherit] border object-contain shadow-lg dark:block"
+                    />
+                  </CarouselItem>
+                  <CarouselItem>
+                    <Image
+                      src="https://nruhnevvqgdhoxxaauxi.supabase.co/storage/v1/object/public/images/Screenshot%202024-09-25%20at%2012.46.43%20PM.png"
+                      alt="Nextjs Starter Kit Dashboard Preview"
+                      width={1100}
+                      height={550}
+                      priority={true}
+                      className="block rounded-[inherit] border object-contain shadow-lg dark:hidden"
+                    />
+                    <Image
+                      src="https://nruhnevvqgdhoxxaauxi.supabase.co/storage/v1/object/public/images/Screenshot%202024-09-25%20at%2012.46.29%20PM.png"
+                      width={1100}
+                      height={550}
+                      alt="Nextjs Starter Kit Dark Mode Dashboard Preview"
+                      priority={true}
+                      className="hidden rounded-[inherit] border object-contain shadow-lg dark:block"
+                    />
+                  </CarouselItem>
+                  <CarouselItem>
+                    <Image
+                      src="https://nruhnevvqgdhoxxaauxi.supabase.co/storage/v1/object/public/images/Screenshot%202024-09-25%20at%2012.49.03%20PM.png"
+                      alt="Nextjs Starter Kit Dashboard Preview"
+                      width={1100}
+                      height={550}
+                      priority={true}
+                      className="block rounded-[inherit] border object-contain shadow-lg dark:hidden"
+                    />
+                    <Image
+                      src="https://nruhnevvqgdhoxxaauxi.supabase.co/storage/v1/object/public/images/Screenshot%202024-09-25%20at%2012.48.48%20PM.png"
+                      width={1100}
+                      height={550}
+                      alt="Nextjs Starter Kit Dark Mode Dashboard Preview"
+                      priority={true}
+                      className="hidden rounded-[inherit] border object-contain shadow-lg dark:block"
+                    />
+                  </CarouselItem>
+                  <CarouselItem>
+                    <Image
+                      src="https://nruhnevvqgdhoxxaauxi.supabase.co/storage/v1/object/public/images/Screenshot%202024-09-25%20at%2012.49.20%20PM.png"
+                      alt="Nextjs Starter Kit Dashboard Preview"
+                      width={1100}
+                      height={550}
+                      priority={true}
+                      className="block rounded-[inherit] border object-contain shadow-lg dark:hidden"
+                    />
+                    <Image
+                      src="https://nruhnevvqgdhoxxaauxi.supabase.co/storage/v1/object/public/images/Screenshot%202024-09-25%20at%2012.49.36%20PM.png"
+                      width={1100}
+                      height={550}
+                      alt="Nextjs Starter Kit Dark Mode Dashboard Preview"
+                      priority={true}
+                      className="hidden rounded-[inherit] border object-contain shadow-lg dark:block"
+                    />
+                  </CarouselItem>
+                  {/* Add more CarouselItems here if you have more images */}
+                </CarouselContent>
+              </Carousel>
+            )}
             <BorderBeam size={250} duration={12} delay={9} />
           </div>
         </div>

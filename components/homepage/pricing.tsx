@@ -127,7 +127,7 @@ const PricingCard = ({
                 ? "$" + yearlyPrice
                 : monthlyPrice
                   ? "$" + monthlyPrice
-                  : "Custom"}
+                  : "$0/month"}
             </h2>
             <span className="mb-1 flex flex-col justify-end text-sm">
               {yearlyPrice && isYearly
@@ -228,15 +228,11 @@ export default function Pricing() {
 
   const plans = [
     {
-      title: "Basic",
-      monthlyPrice: 10,
-      yearlyPrice: 100,
+      title: "Free",
+      monthlyPrice: 0,
+      yearlyPrice: 0,
       description: "Essential features you need to get started",
-      features: [
-        "Example Feature Number 1",
-        "Example Feature Number 2",
-        "Example Feature Number 3",
-      ],
+      features: ["Idea Management", "Script page", "Resources page"],
       priceIdMonthly: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID,
       priceIdYearly: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID,
       actionLabel: "Get Started",
@@ -245,39 +241,24 @@ export default function Pricing() {
       title: "Pro",
       monthlyPrice: 25,
       yearlyPrice: 250,
-      description: "Perfect for owners of small & medium businessess",
+      description: "Perfect for owners of medium content creator",
       features: [
-        "Example Feature Number 1",
-        "Example Feature Number 2",
-        "Example Feature Number 3",
+        "All features of Free paln",
+        "AI feature for ideas",
+        "AI for scripting and reading.",
       ],
       actionLabel: "Get Started",
       priceIdMonthly: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID,
       priceIdYearly: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID,
       popular: true,
     },
-    {
-      title: "Enterprise",
-      price: "Custom",
-      description: "Dedicated support and infrastructure to fit your needs",
-      features: [
-        "Example Feature Number 1",
-        "Example Feature Number 2",
-        "Example Feature Number 3",
-        "Super Exclusive Feature",
-      ],
-      actionLabel: "Contact Sales",
-      priceIdMonthly: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID,
-      priceIdYearly: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID,
-      exclusive: true,
-    },
   ];
 
   return (
     <div>
       <PricingHeader
-        title="Sample Pricing Plans"
-        subtitle="Use these sample pricing cards in your SAAS"
+        title="Pricing Plans"
+        subtitle="We have very little pricing for creators"
       />
       <PricingSwitch onSwitch={togglePricingPeriod} />
       <section className="mt-8 flex flex-col justify-center gap-8 sm:flex-row sm:flex-wrap">

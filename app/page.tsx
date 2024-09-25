@@ -10,24 +10,26 @@ import config from "@/config";
 export default function Home() {
   return (
     <PageWrapper>
-      <div className="flex flex-col justify-center items-center w-full mt-[1rem] p-3">
+      <div className="mt-[1rem] flex w-full flex-col items-center justify-center p-3">
         <HeroSection />
       </div>
-      <div className="flex my-[8rem] w-full justify-center items-center">
+      <div className="my-[8rem] flex w-full items-center justify-center">
         <SideBySide />
       </div>
-      <div className="flex flex-col p-2 w-full justify-center items-center">
+      {/* <div className="flex w-full flex-col items-center justify-center p-2">
         <MarketingCards />
-      </div>
-      <div className="max-w-[1200px] p-8 mt-[2rem] lg:mt-[6rem] lg:mb-[5rem]">
+      </div> */}
+      {/* <div className="max-w-[1200px] p-8 mt-[2rem] lg:mt-[6rem] lg:mb-[5rem]">
         <BlogSample />
-      </div>
-      {(config.auth.enabled && config.payments.enabled) && <div>
-        <Pricing />
-      </div>}
-      <div className="flex justify-center items-center w-full my-[8rem]">
+      </div> */}
+      {config.auth.enabled && config.payments.enabled && (
+        <div>
+          <Pricing />
+        </div>
+      )}
+      {/* <div className="my-[8rem] flex w-full items-center justify-center">
         <AccordionComponent />
-      </div>
+      </div> */}
     </PageWrapper>
   );
 }
