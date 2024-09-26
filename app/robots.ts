@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/dashboard/',
     },
-    sitemap: 'https://starter.rasmic.xyz/sitemap.xml',
+    sitemap: 'https://contentflows.vercel.app/sitemap.xml',
   }
 }

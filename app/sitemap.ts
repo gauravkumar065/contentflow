@@ -7,18 +7,18 @@ type SitemapEntry = {
   url: string;
   lastModified: string;
   changeFrequency:
-    | "always"
-    | "hourly"
-    | "daily"
-    | "weekly"
-    | "monthly"
-    | "yearly"
-    | "never";
+  | "always"
+  | "hourly"
+  | "daily"
+  | "weekly"
+  | "monthly"
+  | "yearly"
+  | "never";
   priority?: number;
 };
 
 export default async function sitemap(): Promise<SitemapEntry[]> {
-  const baseUrl = "https://starter.rasmic.xyz";
+  const baseUrl = "https://contentflows.vercel.app/";
 
   const staticPages: SitemapEntry[] = [
     {

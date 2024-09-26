@@ -12,6 +12,7 @@ import {
   Handshake,
   BarChart2,
   List,
+  Clapperboard,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -37,7 +38,8 @@ export default function DashboardSideBar() {
       <div className="flex h-full max-h-screen flex-col gap-2">
         <div className="flex h-[55px] w-full items-center justify-between border-b px-3">
           <Link className="ml-1 flex items-center gap-2 font-semibold" href="/">
-            <span className="">Brainwave</span>
+            <span className="">ContentFlow</span>
+            <Clapperboard aria-hidden="true" />
           </Link>
         </div>
         <div className="flex-1 overflow-auto py-2">

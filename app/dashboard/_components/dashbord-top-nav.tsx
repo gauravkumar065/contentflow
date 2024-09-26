@@ -23,6 +23,7 @@ import {
   Handshake,
   BarChart2,
   List,
+  Clapperboard,
 } from "lucide-react";
 import Link from "next/link";
 import { ReactNode } from "react";
@@ -31,9 +32,9 @@ import { FaTasks } from "react-icons/fa";
 export default function DashboardTopNav({ children }: { children: ReactNode }) {
   return (
     <div className="flex flex-col">
-      <header className="flex h-14 lg:h-[55px] items-center gap-4 border-b px-3">
+      <header className="flex h-14 items-center gap-4 border-b px-3 lg:h-[55px]">
         <Dialog>
-          <SheetTrigger className="min-[1024px]:hidden p-2 transition">
+          <SheetTrigger className="p-2 transition min-[1024px]:hidden">
             <HamburgerMenuIcon />
             <Link href="/dashboard">
               <span className="sr-only">Home</span>
@@ -42,10 +43,10 @@ export default function DashboardTopNav({ children }: { children: ReactNode }) {
           <SheetContent side="left">
             <SheetHeader>
               <Link href="/">
-                <SheetTitle>Nextjs Starter Kit</SheetTitle>
+                <SheetTitle>Contentflow</SheetTitle>
               </Link>
             </SheetHeader>
-            <div className="flex flex-col space-y-3 mt-[1rem]">
+            <div className="mt-[1rem] flex flex-col space-y-3">
               <DialogClose asChild>
                 <Link href="/dashboard">
                   <Button variant="outline" className="w-full">
@@ -78,14 +79,14 @@ export default function DashboardTopNav({ children }: { children: ReactNode }) {
                   </Button>
                 </Link>
               </DialogClose>
-              <DialogClose asChild>
+              {/* <DialogClose asChild>
                 <Link href="/dashboard/brand-collaboration">
                   <Button variant="outline" className="w-full">
                     <Handshake className="mr-2 h-4 w-4" />
                     Brand Collaboration
                   </Button>
                 </Link>
-              </DialogClose>
+              </DialogClose> */}
               <DialogClose asChild>
                 <Link href="/dashboard/resources">
                   <Button variant="outline" className="w-full">
@@ -94,26 +95,26 @@ export default function DashboardTopNav({ children }: { children: ReactNode }) {
                   </Button>
                 </Link>
               </DialogClose>
-              <DialogClose asChild>
+              {/* <DialogClose asChild>
                 <Link href="/dashboard/analytics">
                   <Button variant="outline" className="w-full">
                     <BarChart2 className="mr-2 h-4 w-4" />
                     Analytics
                   </Button>
                 </Link>
-              </DialogClose>
-              <DialogClose asChild>
+              </DialogClose> */}
+              {/* <DialogClose asChild>
                 <Link href="/dashboard/workflow">
                   <Button variant="outline" className="w-full">
                     <FaTasks className="mr-2 h-4 w-4" />
                     Workflow
                   </Button>
                 </Link>
-              </DialogClose>
+              </DialogClose> */}
             </div>
           </SheetContent>
         </Dialog>
-        <div className="flex justify-center items-center gap-2 ml-auto">
+        <div className="ml-auto flex items-center justify-center gap-2">
           {config?.auth?.enabled && <UserProfile />}
           <ModeToggle />
         </div>

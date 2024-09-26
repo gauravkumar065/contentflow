@@ -11,7 +11,7 @@ import {
 } from "../ui/sheet";
 import { UserProfile } from "../user-profile";
 import ModeToggle from "../mode-toggle";
-import { BlocksIcon } from "lucide-react";
+import { Clapperboard } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -68,7 +68,7 @@ export default function NavBar() {
           </SheetTrigger>
           <SheetContent side="left">
             <SheetHeader>
-              <SheetTitle>Next Starter</SheetTitle>
+              <SheetTitle>Contentflow</SheetTitle>
             </SheetHeader>
             <div className="mt-[1rem] flex flex-col space-y-3">
               <DialogClose asChild>
@@ -96,7 +96,7 @@ export default function NavBar() {
       <NavigationMenu>
         <NavigationMenuList className="flex w-[100%] justify-between gap-3 max-[825px]:hidden">
           <Link href="/" className="flex items-center pl-2" aria-label="Home">
-            <BlocksIcon aria-hidden="true" />
+            <Clapperboard aria-hidden="true" />
             <span className="sr-only">Home</span>
           </Link>
         </NavigationMenuList>
