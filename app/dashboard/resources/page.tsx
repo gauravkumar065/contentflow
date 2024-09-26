@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Copy,
   Check,
@@ -36,7 +36,6 @@ const ideas = [
   { id: 5, name: "Travel Photography" },
 ];
 
-// Mock data for resources
 const allResources = [
   {
     id: 1,
@@ -108,6 +107,15 @@ const allResources = [
   },
 ];
 
+const highlightColors = [
+  "bg-red-300",
+  "bg-blue-300",
+  "bg-green-300",
+  "bg-yellow-300",
+  "bg-purple-300",
+  "bg-pink-300",
+];
+
 const getIconForType = (type: any) => {
   switch (type) {
     case "BRAND_LINK":
@@ -126,10 +134,10 @@ const getIconForType = (type: any) => {
 };
 
 export default function Component() {
-  const [selectedIdea, setSelectedIdea] = useState("all");
+  const [selectedIdea, setSelectedIdea]: any = useState("all");
   const [copiedStates, setCopiedStates]: any = useState({});
 
-  const handleCopy = (text: string, id: string) => {
+  const handleCopy = (text: string, id: any) => {
     navigator.clipboard.writeText(text);
     setCopiedStates({ ...copiedStates, [id]: true });
     setTimeout(() => {
@@ -169,8 +177,13 @@ export default function Component() {
         </Select>
       </div>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {filteredResources.map((resource) => (
-          <Card key={resource.id} className="overflow-hidden">
+        {filteredResources.map((resource, index) => (
+          <Card
+            key={resource.id}
+            className={`overflow-hidden ${
+              highlightColors[index % highlightColors.length]
+            } dark:text-black`}
+          >
             <CardHeader className="pb-4">
               <div className="flex items-start justify-between">
                 <CardTitle className="text-xl">{resource.title}</CardTitle>
@@ -179,24 +192,26 @@ export default function Component() {
                   {resource.type}
                 </Badge>
               </div>
-              <CardDescription>{resource.description}</CardDescription>
+              <CardDescription className="dark:text-black">
+                {resource.description}
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
-                {resource.links.map((link, index) => (
+                {resource.links.map((link, linkIndex) => (
                   <div
-                    key={index}
-                    className="bg-muted flex items-center justify-between rounded-md p-2"
+                    key={linkIndex}
+                    className="flex items-center justify-between rounded-md bg-white bg-opacity-70 p-2"
                   >
                     <span className="mr-2 flex-1 truncate text-sm">{link}</span>
                     <Button
                       size="sm"
                       variant="ghost"
                       onClick={() =>
-                        handleCopy(link, `${resource.id}-${index}`)
+                        handleCopy(link, `${resource.id}-${linkIndex}`)
                       }
                     >
-                      {copiedStates[`${resource.id}-${index}`] ? (
+                      {copiedStates[`${resource.id}-${linkIndex}`] ? (
                         <Check className="h-4 w-4 text-green-500" />
                       ) : (
                         <Copy className="h-4 w-4" />
@@ -206,7 +221,7 @@ export default function Component() {
                 ))}
               </div>
               <Button
-                className="mt-4 w-full"
+                className="mt-4 w-full bg-white bg-opacity-70 text-black hover:bg-white hover:bg-opacity-100"
                 variant="outline"
                 onClick={() => handleCopyAll(resource)}
               >
