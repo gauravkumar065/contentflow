@@ -150,6 +150,33 @@ const config: Config = {
         "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
         "background-shine": "background-shine 2s linear infinite",
       },
+      typography: (theme: any) => ({
+        DEFAULT: {
+          css: {
+            color: theme('colors.gray.900'),
+            a: {
+              color: theme('colors.blue.600'),
+              '&:hover': {
+                color: theme('colors.blue.800'),
+              },
+            },
+            'h1, h2, h3, h4': {
+              color: theme('colors.gray.900'),
+              'margin-top': '1.5em',
+              'margin-bottom': '0.5em',
+            },
+            'ul, ol': {
+              'padding-left': '1.25em',
+            },
+            'code::before': {
+              content: '""',
+            },
+            'code::after': {
+              content: '""',
+            },
+          },
+        },
+      }),
     },
   },
   // Merging plugins, adding any unique plugins from both files
@@ -178,6 +205,7 @@ const config: Config = {
         { values: flattenColorPalette(theme("backgroundColor")), type: "color" }
       );
     },
+    require('@tailwindcss/typography')
   ],
 };
 

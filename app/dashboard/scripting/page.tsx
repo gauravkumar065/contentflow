@@ -303,14 +303,6 @@ export default function EnhancedScriptWriter() {
               </SelectContent>
             </Select>
           </div>
-
-          {/* <Textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            className="border-secondary bg-background focus:ring-primary min-h-[500px] resize-none border-2 p-4 text-lg leading-relaxed focus:outline-none focus:ring-1"
-            placeholder="Start writing your script here..."
-            aria-label="Script content"
-          /> */}
           <Tiptap content={content} />
 
           <div className="flex items-center justify-between">
