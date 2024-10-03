@@ -1,5 +1,6 @@
 // src/components/CreateTaskDialog.tsx
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
+import { IdeaStatus } from "@prisma/client";
 import {
   Dialog,
   DialogContent,
@@ -17,47 +18,50 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { NewTask } from "../page"; // Import the NewTask type from Dashboard
+import { NewIdea } from "../page"; // Import the NewIdea type from Dashboard
 
 interface CreateTaskDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  onCreateTask: (task: NewTask) => void;
+  onCreateTask: (task: NewIdea) => void;
+  userId: number; // Add userId prop
 }
 
 const CreateTaskDialog: React.FC<CreateTaskDialogProps> = ({
   isOpen,
   onClose,
   onCreateTask,
+  userId,
 }) => {
-  const [newTask, setNewTask] = useState<NewTask>({
+  const [newIdea, setNewIdea] = useState<NewIdea>({
+    userId: userId,
     title: "",
     description: "",
     type: "",
-    resources: [],
+    status: IdeaStatus.NEW,
   });
 
   const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
-    setNewTask((prev) => ({ ...prev, [name]: value }));
+    setNewIdea((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSelectChange = (value: string) => {
-    setNewTask((prev) => ({ ...prev, type: value }));
-  };
-
-  const handleResourcesChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const resources = e.target.value
-      .split(",")
-      .map((resource) => resource.trim());
-    setNewTask((prev) => ({ ...prev, resources }));
+    setNewIdea((prev) => ({ ...prev, type: value }));
   };
 
   const handleSubmit = () => {
-    onCreateTask(newTask);
-    setNewTask({ title: "", description: "", type: "", resources: [] });
+    setNewIdea({
+      userId: userId,
+      title: "",
+      description: "",
+      type: "",
+      status: IdeaStatus.NEW,
+    });
+    console.log("newidea======>", newIdea);
+    onCreateTask(newIdea);
   };
 
   return (
@@ -69,12 +73,12 @@ const CreateTaskDialog: React.FC<CreateTaskDialogProps> = ({
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="title" className="text-right">
-              Topic
+              Title
             </Label>
             <Input
               id="title"
               name="title"
-              value={newTask.title}
+              value={newIdea.title}
               onChange={handleInputChange}
               className="col-span-3"
             />
@@ -86,7 +90,7 @@ const CreateTaskDialog: React.FC<CreateTaskDialogProps> = ({
             <Textarea
               id="description"
               name="description"
-              value={newTask.description}
+              value={newIdea.description}
               onChange={handleInputChange}
               className="col-span-3"
             />
@@ -95,7 +99,7 @@ const CreateTaskDialog: React.FC<CreateTaskDialogProps> = ({
             <Label htmlFor="type" className="text-right">
               Type
             </Label>
-            <Select onValueChange={handleSelectChange} value={newTask.type}>
+            <Select onValueChange={handleSelectChange} value={newIdea.type}>
               <SelectTrigger className="col-span-3">
                 <SelectValue placeholder="Select content type" />
               </SelectTrigger>
@@ -106,21 +110,8 @@ const CreateTaskDialog: React.FC<CreateTaskDialogProps> = ({
               </SelectContent>
             </Select>
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="resources" className="text-right">
-              Resources
-            </Label>
-            <Input
-              id="resources"
-              name="resources"
-              value={newTask.resources.join(", ")}
-              onChange={handleResourcesChange}
-              placeholder="Comma-separated list of resources"
-              className="col-span-3"
-            />
-          </div>
         </div>
-        <Button onClick={handleSubmit}>Create idea</Button>
+        <Button onClick={handleSubmit}>Create Idea</Button>
       </DialogContent>
     </Dialog>
   );

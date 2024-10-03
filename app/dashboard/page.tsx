@@ -1,141 +1,109 @@
 // src/components/Dashboard.tsx
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 import Column from "./_components/column";
 import CreateTaskDialog from "./_components/task-dailog";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
+import { IdeaStatus, ResourceType } from "@prisma/client";
+import { useUser } from "@clerk/nextjs";
+import config from "@/config";
+import fetchUserData from "@/utils/data/userdetails";
 
-export interface Task {
+export interface Idea {
   id: string;
-  content: string;
-  progress: number;
+  userId: number; // Changed from string to number
   title: string;
   description: string;
+  progress: number;
   type: string;
-  resources: string[];
+  status: IdeaStatus; // Using the enum from Prisma
+  createdAt: Date;
+  updatedAt: Date;
+  scripts: Script[];
+  resources: Resource[];
+  aiContent?: AIContent;
+}
+
+export interface Script {
+  id: string;
+  ideaId: string;
+  version: string;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface Resource {
+  id: string;
+  ideaId: string;
+  type: ResourceType; // Using the enum from Prisma
+  url: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface AIContent {
+  id: string;
+  ideaId: string;
+  twitterPost: string;
+  instagramPost: string;
+  hashtags: string[];
+  blogPost: string;
+  youtubeCommunityPost: string;
+  youtubeTitle: string;
+  youtubeDescription: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface ColumnData {
   id: string;
   title: string;
-  tasks: Task[];
+  tasks: Idea[];
 }
 
 export type Columns = {
   [key: string]: ColumnData;
 };
+
 const initialColumns: Columns = {
   "new-idea": {
     id: "new-idea",
     title: "New Idea",
-    tasks: [
-      {
-        id: "task-1",
-        content: "Brainstorm content topics for Q4",
-        progress: 0,
-        title: "Q4 Content Brainstorm",
-        description: "Generate new ideas for content to be created in Q4",
-        type: "Shorts",
-        resources: [],
-      },
-      {
-        id: "task-2",
-        content: "Research emerging trends in social media",
-        progress: 0,
-        title: "Social Media Trends",
-        description: "Identify new trends and how they can be leveraged",
-        type: "Video",
-        resources: [],
-      },
-    ],
+    tasks: [],
   },
   "do-today": {
     id: "do-today",
     title: "Do today",
-    tasks: [
-      {
-        id: "task-6",
-        content: "Update website homepage with new banner",
-        progress: 10,
-        title: "Homepage Update",
-        description: "Change the homepage banner to reflect the new campaign",
-        type: "Shorts",
-        resources: [],
-      },
-      {
-        id: "task-7",
-        content: "Write a blog post on the latest industry trends",
-        progress: 20,
-        title: "Blog Post",
-        description:
-          "Draft and publish a blog post discussing recent industry developments",
-        type: "Blog",
-        resources: [],
-      },
-    ],
+    tasks: [],
   },
   "in-progress": {
     id: "in-progress",
     title: "In progress",
-    tasks: [
-      {
-        id: "task-11",
-        content: "Edit the video for the new product launch",
-        progress: 45,
-        title: "Product Launch Video",
-        description: "Work on editing the footage for the product launch",
-        type: "Blog",
-        resources: [],
-      },
-      {
-        id: "task-12",
-        content: "Develop the landing page for the new course",
-        progress: 60,
-        title: "Course Landing Page",
-        description: "Design and build the landing page for the new course",
-        type: "Blog",
-        resources: [],
-      },
-    ],
+    tasks: [],
   },
   publish: {
     id: "publish",
     title: "Publish",
-    tasks: [
-      {
-        id: "task-16",
-        content: "Figure out how to use Clever from the help center!",
-        progress: 10,
-        title: "Learn Clever",
-        description: "Explore the help center to understand Clever usage",
-        type: "Blog",
-        resources: [],
-      },
-      {
-        id: "task-17",
-        content: "Build some new components in Figma",
-        progress: 83,
-        title: "Figma Components",
-        description: "Create new reusable components in Figma",
-        type: "Blog",
-        resources: [],
-      },
-    ],
+    tasks: [],
   },
 };
-
-export interface NewTask {
+export interface NewIdea {
+  userId: number;
   title: string;
   description: string;
   type: string;
-  resources: string[];
+  status: IdeaStatus;
 }
 
 const Dashboard: React.FC = () => {
   const [columns, setColumns] = useState<Columns>(initialColumns);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const [userData, setUserData] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const { user } = useUser();
 
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
@@ -174,7 +142,7 @@ const Dashboard: React.FC = () => {
     }
   };
 
-  const addNewTask = (newTask: NewTask) => {
+  const addNewTask = (newIdea: NewIdea) => {
     const newTaskId = `task-${Date.now()}`;
     const updatedColumns = {
       ...columns,
@@ -183,12 +151,16 @@ const Dashboard: React.FC = () => {
         tasks: [
           {
             id: newTaskId,
-            content: newTask.title,
-            progress: 0,
-            title: newTask.title,
-            description: newTask.description,
-            type: newTask.type,
-            resources: newTask.resources,
+            userId: newIdea.userId,
+            title: newIdea.title,
+            description: newIdea.description,
+            progress: 2,
+            type: newIdea.type,
+            status: IdeaStatus.NEW,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            scripts: [],
+            resources: [],
           },
           ...columns["new-idea"].tasks,
         ],
@@ -197,6 +169,19 @@ const Dashboard: React.FC = () => {
     setColumns(updatedColumns);
     setIsDialogOpen(false);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (user?.id && config?.auth?.enabled) {
+        const userData = await fetchUserData(user?.id);
+        setUserData(userData);
+      } else {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [user]);
 
   return (
     <div
@@ -224,6 +209,7 @@ const Dashboard: React.FC = () => {
         isOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
         onCreateTask={addNewTask}
+        userId={userData?.userId}
       />
     </div>
   );

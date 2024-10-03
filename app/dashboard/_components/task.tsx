@@ -24,7 +24,7 @@ interface TaskProps {
   index: number;
 }
 
-const Task: React.FC<TaskProps> = ({ task, index }) => {
+const Idea: React.FC<TaskProps> = ({ task, index }) => {
   return (
     <Draggable draggableId={task.id} index={index}>
       {(provided) => (
@@ -65,4 +65,4 @@ const Task: React.FC<TaskProps> = ({ task, index }) => {
   );
 };
 
-export default Task;
+export default Idea;

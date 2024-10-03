@@ -1,7 +1,7 @@
 // src/components/Column.tsx
 import React from "react";
 import { Droppable } from "@hello-pangea/dnd";
-import Task from "./task";
+import Idea from "./task";
 import { ColumnData } from "../page";
 
 interface ColumnProps {
@@ -21,7 +21,7 @@ const Column: React.FC<ColumnProps> = ({ column }) => {
             {column.title}
           </h2>
           {column.tasks.map((task, index) => (
-            <Task key={task.id} task={task} index={index} />
+            <Idea key={task.id} task={task} index={index} />
           ))}
           {provided.placeholder}
         </div>

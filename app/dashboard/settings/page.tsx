@@ -9,6 +9,7 @@ import config from "@/config";
 import axios from "axios";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import fetchUserData from "@/utils/data/userdetails";
 
 export default function Settings() {
   const [stripePromise, setStripePromise] = useState<Promise<any> | null>(null);
@@ -22,24 +23,17 @@ export default function Settings() {
   }, []);
 
   useEffect(() => {
-    if (user?.id && config?.auth?.enabled) {
-      fetchUserData(user?.id);
-    } else {
-      setIsLoading(false);
-    }
-  }, [user]);
+    const fetchData = async () => {
+      if (user?.id && config?.auth?.enabled) {
+        const userData = await fetchUserData(user?.id);
+        setUserData(userData);
+      } else {
+        setIsLoading(false);
+      }
+    };
 
-  const fetchUserData = async (userId: string) => {
-    try {
-      const response = await fetch(`/api/user?userId=${userId}`);
-      const data = await response.json();
-      setUserData(data);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    fetchData();
+  }, [user]);
 
   const handleBilling = async () => {
     try {
