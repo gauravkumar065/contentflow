@@ -10,10 +10,12 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
+import CustomProgress from "./custom-progress";
 
 interface TaskDetailsProps {
   task: {
     type: string;
+    progress: number;
   };
 }
 
@@ -124,7 +126,7 @@ const TaskDetails: React.FC<TaskDetailsProps> = ({ task }) => {
       <CardContent>
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <Progress value={60} className="w-2/3" />
+            <CustomProgress value={task.progress} className="mr-4" />
             <span className="text-muted-foreground text-sm">2 days left</span>
           </div>
           <div className="flex items-center justify-between text-sm">

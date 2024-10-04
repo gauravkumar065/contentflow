@@ -56,6 +56,10 @@ export default function RootLayout({
             href="https://nruhnevvqgdhoxxaauxi.supabase.co/storage/v1/object/public/images/Screenshot%202024-09-25%20at%2010.03.34%20AM.png"
             as="image"
           />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap"
+            rel="stylesheet"
+          />
         </head>
         <body className={GeistSans.className}>
           <Provider>

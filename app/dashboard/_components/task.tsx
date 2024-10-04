@@ -15,7 +15,6 @@ import TaskDetails from "./TaskDetails";
 interface TaskProps {
   task: {
     id: string;
-    content: string;
     progress: number;
     title: string;
     description: string;
@@ -38,7 +37,7 @@ const Idea: React.FC<TaskProps> = ({ task, index }) => {
             >
               <CardHeader>
                 <CardTitle className="text-sm font-medium text-gray-700 dark:text-white">
-                  {task.content}
+                  {task.title}
                 </CardTitle>
               </CardHeader>
               <CardContent>
