@@ -18,8 +18,7 @@ const TITLE_TAILWIND_CLASS = "text-4xl sm:text-5xl md:text-6xl";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.6 } }, // Moved transition here
 };
 
 const staggerChildren = {
