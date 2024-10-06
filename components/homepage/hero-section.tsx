@@ -1,11 +1,12 @@
 "use client";
-import { ArrowRight, Github } from "lucide-react";
+
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import { ArrowRight, Sparkles, PenTool, Zap } from "lucide-react";
+import { motion } from "framer-motion";
 import { BorderBeam } from "../magicui/border-beam";
 import { Button } from "../ui/button";
-import Image from "next/image";
-import { TITLE_TAILWIND_CLASS } from "@/utils/constants";
 import {
   Carousel,
   CarouselContent,
@@ -13,126 +14,145 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 
+const TITLE_TAILWIND_CLASS = "text-4xl sm:text-5xl md:text-6xl";
+
+const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6 },
+};
+
+const staggerChildren = {
+  animate: { transition: { staggerChildren: 0.1 } },
+};
+
 export default function HeroSection() {
   const [isClient, setIsClient] = useState(false);
+
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  const plugin = Autoplay({ delay: 2000, stopOnInteraction: false });
+  const plugin = Autoplay({ delay: 4000, stopOnInteraction: false });
+
   return (
-    <section
-      className="mt-[3rem] flex flex-col items-center justify-center leading-6"
-      aria-label="Nextjs Starter Kit Hero"
+    <motion.section
+      initial="initial"
+      animate="animate"
+      className="mt-16 flex flex-col items-center justify-center leading-6"
+      aria-label="ContentFlow Hero"
     >
-      <h1
-        className={`${TITLE_TAILWIND_CLASS} max-w-[1120px] scroll-m-20 bg-gradient-to-b text-center font-semibold tracking-tight dark:text-white`}
+      <motion.h1
+        variants={fadeInUp}
+        className={`${TITLE_TAILWIND_CLASS} from-primary max-w-[800px] scroll-m-20 bg-gradient-to-r via-purple-500 to-pink-500 bg-clip-text text-center font-bold tracking-tight text-transparent`}
       >
-        Turn your creative sparks into content that ignites.
-      </h1>
-      <p className="mx-auto mt-2 max-w-[700px] text-center text-gray-500 dark:text-gray-400">
-        Streamline Your Content Creation Pipeline
-      </p>
-      <div className="flex items-center justify-center gap-3">
-        <Link href="/dashboard" className="mt-5">
-          <Button className="animate-buttonheartbeat rounded-md bg-blue-600 text-sm font-semibold text-white hover:bg-blue-500">
-            Get Started
-          </Button>
-        </Link>
-      </div>
-      <div>
-        <div className="relative mt-7 flex max-w-6xl justify-center overflow-hidden">
-          <div className="relative rounded-xl">
-            {isClient && (
-              <Carousel
-                plugins={[plugin]}
-                className="w-full max-w-6xl"
-                opts={{
-                  align: "start",
-                  loop: true,
-                }}
-              >
-                <CarouselContent>
-                  <CarouselItem>
+        Transform Ideas into Compelling Content
+      </motion.h1>
+      <motion.p
+        variants={fadeInUp}
+        className="text-muted-foreground mx-auto mt-4 max-w-[700px] text-center text-xl"
+      >
+        Streamline your content creation journey from spark to publication
+      </motion.p>
+      <motion.div
+        variants={staggerChildren}
+        className="mt-8 flex flex-wrap items-center justify-center gap-4"
+      >
+        <motion.div variants={fadeInUp}>
+          <Link href="/dashboard">
+            <Button className="bg-primary text-primary-foreground hover:bg-primary/90 group relative overflow-hidden rounded-full px-6 py-2 text-lg font-semibold transition-all">
+              <span className="relative z-10">Start Creating</span>
+              <motion.div
+                className="absolute inset-0 z-0 bg-gradient-to-r from-purple-600 to-pink-600"
+                initial={{ x: "100%" }}
+                whileHover={{ x: 0 }}
+                transition={{ duration: 0.3 }}
+              />
+              <ArrowRight className="relative z-10 ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </Button>
+          </Link>
+        </motion.div>
+        <motion.div variants={fadeInUp}>
+          <Link href="/features">
+            <Button
+              variant="outline"
+              className="rounded-full px-6 py-2 text-lg"
+            >
+              Explore Features
+            </Button>
+          </Link>
+        </motion.div>
+      </motion.div>
+      <motion.div
+        variants={staggerChildren}
+        className="mt-12 flex flex-wrap items-center justify-center gap-8 text-center"
+      >
+        {[
+          { icon: Sparkles, text: "AI-Powered Ideation" },
+          { icon: PenTool, text: "Collaborative Editing" },
+          { icon: Zap, text: "Instant Publishing" },
+        ].map(({ icon: Icon, text }, index) => (
+          <motion.div
+            key={index}
+            variants={fadeInUp}
+            className="flex items-center space-x-2"
+          >
+            <Icon className="text-primary h-6 w-6" />
+            <span className="text-lg font-medium">{text}</span>
+          </motion.div>
+        ))}
+      </motion.div>
+      <motion.div
+        variants={fadeInUp}
+        className="relative mt-16 w-full max-w-6xl overflow-hidden rounded-xl"
+      >
+        {isClient && (
+          <Carousel
+            plugins={[plugin]}
+            className="w-full"
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+          >
+            <CarouselContent>
+              {[
+                {
+                  light: "darkmode.png.png",
+                  dark: "dashboard-dark.png",
+                  desc: "ContentFlow Dashboard",
+                },
+              ].map((item, index) => (
+                <CarouselItem key={index}>
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                  >
                     <Image
-                      src="https://nruhnevvqgdhoxxaauxi.supabase.co/storage/v1/object/public/images/Screenshot%202024-09-25%20at%2010.03.34%20AM.png"
-                      alt="Nextjs Starter Kit Dashboard Preview"
+                      src={`https://nruhnevvqgdhoxxaauxi.supabase.co/storage/v1/object/public/images/lightmode.png?t=2024-10-05T07%3A21%3A25.786Z`}
                       width={1100}
                       height={550}
-                      priority={true}
-                      className="block rounded-[inherit] border object-contain shadow-lg dark:hidden"
+                      priority={index === 0}
+                      className="block rounded-xl border object-contain shadow-lg dark:hidden"
+                      alt={`ContentFlow ${item.desc} - Light Mode`}
                     />
                     <Image
-                      src="https://nruhnevvqgdhoxxaauxi.supabase.co/storage/v1/object/public/images/Screenshot%202024-09-25%20at%2010.03.24%20AM.png"
+                      src={`https://nruhnevvqgdhoxxaauxi.supabase.co/storage/v1/object/public/images/darkmode.png`}
                       width={1100}
                       height={550}
-                      alt="Nextjs Starter Kit Dark Mode Dashboard Preview"
-                      priority={true}
-                      className="hidden rounded-[inherit] border object-contain shadow-lg dark:block"
+                      priority={index === 0}
+                      className="hidden rounded-xl border object-contain shadow-lg dark:block"
+                      alt={`ContentFlow ${item.desc} - Dark Mode`}
                     />
-                  </CarouselItem>
-                  <CarouselItem>
-                    <Image
-                      src="https://nruhnevvqgdhoxxaauxi.supabase.co/storage/v1/object/public/images/Screenshot%202024-09-25%20at%2012.46.43%20PM.png"
-                      alt="Nextjs Starter Kit Dashboard Preview"
-                      width={1100}
-                      height={550}
-                      priority={true}
-                      className="block rounded-[inherit] border object-contain shadow-lg dark:hidden"
-                    />
-                    <Image
-                      src="https://nruhnevvqgdhoxxaauxi.supabase.co/storage/v1/object/public/images/Screenshot%202024-09-25%20at%2012.46.29%20PM.png"
-                      width={1100}
-                      height={550}
-                      alt="Nextjs Starter Kit Dark Mode Dashboard Preview"
-                      priority={true}
-                      className="hidden rounded-[inherit] border object-contain shadow-lg dark:block"
-                    />
-                  </CarouselItem>
-                  <CarouselItem>
-                    <Image
-                      src="https://nruhnevvqgdhoxxaauxi.supabase.co/storage/v1/object/public/images/Screenshot%202024-09-25%20at%2012.49.03%20PM.png"
-                      alt="Nextjs Starter Kit Dashboard Preview"
-                      width={1100}
-                      height={550}
-                      priority={true}
-                      className="block rounded-[inherit] border object-contain shadow-lg dark:hidden"
-                    />
-                    <Image
-                      src="https://nruhnevvqgdhoxxaauxi.supabase.co/storage/v1/object/public/images/Screenshot%202024-09-25%20at%2012.48.48%20PM.png"
-                      width={1100}
-                      height={550}
-                      alt="Nextjs Starter Kit Dark Mode Dashboard Preview"
-                      priority={true}
-                      className="hidden rounded-[inherit] border object-contain shadow-lg dark:block"
-                    />
-                  </CarouselItem>
-                  <CarouselItem>
-                    <Image
-                      src="https://nruhnevvqgdhoxxaauxi.supabase.co/storage/v1/object/public/images/Screenshot%202024-09-25%20at%2012.49.20%20PM.png"
-                      alt="Nextjs Starter Kit Dashboard Preview"
-                      width={1100}
-                      height={550}
-                      priority={true}
-                      className="block rounded-[inherit] border object-contain shadow-lg dark:hidden"
-                    />
-                    <Image
-                      src="https://nruhnevvqgdhoxxaauxi.supabase.co/storage/v1/object/public/images/Screenshot%202024-09-25%20at%2012.49.36%20PM.png"
-                      width={1100}
-                      height={550}
-                      alt="Nextjs Starter Kit Dark Mode Dashboard Preview"
-                      priority={true}
-                      className="hidden rounded-[inherit] border object-contain shadow-lg dark:block"
-                    />
-                  </CarouselItem>
-                  {/* Add more CarouselItems here if you have more images */}
-                </CarouselContent>
-              </Carousel>
-            )}
-            <BorderBeam size={250} duration={12} delay={9} />
-          </div>
-        </div>
-      </div>
-    </section>
+                  </motion.div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        )}
+        <BorderBeam size={300} duration={15} delay={7} />
+      </motion.div>
+    </motion.section>
   );
 }

@@ -261,7 +261,7 @@ export default function Pricing() {
         subtitle="We have very little pricing for creators"
       />
       <PricingSwitch onSwitch={togglePricingPeriod} />
-      <section className="mt-8 flex flex-col justify-center gap-8 sm:flex-row sm:flex-wrap">
+      <section className="mb-8 mt-8 flex flex-col justify-center gap-8 sm:flex-row sm:flex-wrap">
         {plans.map((plan) => {
           return (
             <PricingCard

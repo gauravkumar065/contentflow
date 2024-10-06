@@ -10,6 +10,7 @@ import { IdeaStatus, ResourceType } from "@prisma/client";
 import { useUser } from "@clerk/nextjs";
 import config from "@/config";
 import fetchUserData from "@/utils/data/userdetails";
+import NoIdea from "./_components/no-idea";
 
 export interface Idea {
   id: string;
@@ -151,7 +152,7 @@ const Dashboard: React.FC = () => {
         tasks: [
           {
             id: newTaskId,
-            userId: newIdea.userId,
+            userId: userData.userId,
             title: newIdea.title,
             description: newIdea.description,
             progress: 2,
@@ -183,6 +184,17 @@ const Dashboard: React.FC = () => {
     fetchData();
   }, [user]);
 
+  const areAllColumnsEmpty = Object.values(columns).every(
+    (column) => column.tasks.length === 0,
+  );
+  const highlightColors = [
+    "bg-red-300",
+    "bg-blue-300",
+    "bg-green-300",
+    "bg-yellow-300",
+    "bg-purple-300",
+    "bg-pink-300",
+  ];
   return (
     <div
       style={{ flex: "1 1 auto" }}
@@ -199,11 +211,21 @@ const Dashboard: React.FC = () => {
         </Button>
       </div>
       <DragDropContext onDragEnd={onDragEnd}>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {Object.values(columns).map((column) => (
-            <Column key={column.id} column={column} />
-          ))}
-        </div>
+        {areAllColumnsEmpty ? (
+          <div className="-m-20 flex h-full items-center justify-center">
+            <NoIdea />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {Object.values(columns).map((column, i) => (
+              <Column
+                key={column.id}
+                column={column}
+                color={highlightColors[i]}
+              />
+            ))}
+          </div>
+        )}
       </DragDropContext>
       <CreateTaskDialog
         isOpen={isDialogOpen}
