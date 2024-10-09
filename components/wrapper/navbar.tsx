@@ -54,7 +54,7 @@ export default function NavBar() {
               <Link href="/" className="mr-6 flex items-center space-x-2">
                 <Clapperboard className="h-6 w-6" />
                 <span className="hidden font-bold sm:inline-block">
-                  ContentFlow
+                  Content.Ai
                 </span>
               </Link>
             </NavigationMenuItem>
