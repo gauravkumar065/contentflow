@@ -76,12 +76,3 @@
 - Enable Row Level Security (RLS) in your Supabase project to ensure data protection at the database level.
 - Always make Supabase calls on the server-side (in API routes or server components) to keep your service key secure.
 
-## Learn More
-
-Refer to the documentation of the individual technologies used in this project for more detailed information:
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-- [Supabase Documentation](https://supabase.io/docs)
-- [Prisma Documentation](https://www.prisma.io/docs)
-- [Clerk Documentation](https://clerk.dev/docs) (if using auth)
-- [Stripe Documentation](https://stripe.com/docs) (if using payments)
