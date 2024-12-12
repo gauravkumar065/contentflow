@@ -19,7 +19,7 @@ export const isAuthorized = async (
   try {
     const user = await prisma.user.findUnique({
       where: {
-        userId: userId
+        clerkId: userId
       }
     });
 

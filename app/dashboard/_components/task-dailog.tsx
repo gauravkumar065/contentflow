@@ -24,17 +24,17 @@ interface CreateTaskDialogProps {
   isOpen: boolean;
   onClose: () => void;
   onCreateTask: (task: NewIdea) => void;
-  userId: number; // Add userId prop
+  user: number; // Add userId prop
 }
 
 const CreateTaskDialog: React.FC<CreateTaskDialogProps> = ({
   isOpen,
   onClose,
   onCreateTask,
-  userId,
+  user,
 }) => {
   const [newIdea, setNewIdea] = useState<NewIdea>({
-    userId: userId,
+    user: user,
     title: "",
     description: "",
     type: "",
@@ -53,8 +53,9 @@ const CreateTaskDialog: React.FC<CreateTaskDialogProps> = ({
   };
 
   const handleSubmit = () => {
+    console.log("user", user);
     setNewIdea({
-      userId: userId,
+      user: user,
       title: "",
       description: "",
       type: "",

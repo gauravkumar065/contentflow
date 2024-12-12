@@ -18,7 +18,7 @@ export const userUpdate = async ({
         firstName: first_name,
         lastName: last_name,
         profileImageUrl: profile_image_url,
-        userId: user_id,
+        clerkId: user_id,
       },
     });
 

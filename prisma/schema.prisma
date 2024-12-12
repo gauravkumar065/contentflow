@@ -8,7 +8,7 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model user {
+model User {
   id                    Int                @id @default(autoincrement())
   createdAt             DateTime           @default(now())
   email                 String             @unique
@@ -16,7 +16,7 @@ model user {
   lastName              String?
   gender                String?
   profileImageUrl       String?
-  userId                String             @unique
+  clerkId               String             @unique
   subscription          String?
   stripeCustomerId      String?            @unique
   subscriptionPlan      SubscriptionPlan   @default(FREE)
@@ -30,16 +30,16 @@ model user {
 }
 
 model Idea {
-  id           String         @id @default(uuid())
+  id           String     @id @default(uuid())
   userId       Int
-  user         user           @relation(fields: [userId], references: [id])
+  user         User       @relation(fields: [userId], references: [id])
   title        String
   description  String
   progress     Float
   type         String
-  status       IdeaStatus     @default(NEW)
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  status       IdeaStatus @default(NEW)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
   scripts      Script[]
   resources    Resource[]
   aiContent    AIContent?
@@ -69,13 +69,13 @@ model AIContent {
   id                    String   @id @default(uuid())
   ideaId                String   @unique
   idea                  Idea     @relation(fields: [ideaId], references: [id])
-  twitterPost           String
-  instagramPost         String
+  twitterPost           String?
+  instagramPost         String?
   hashtags              String[]
-  blogPost              String
-  youtubeCommunityPost  String
-  youtubeTitle          String
-  youtubeDescription    String
+  blogPost              String?
+  youtubeCommunityPost  String?
+  youtubeTitle          String?
+  youtubeDescription    String?
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
 }

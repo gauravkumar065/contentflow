@@ -71,13 +71,13 @@ async function handleCheckoutSessionCompleted(event: Stripe.Event) {
 
   try {
     const user = await prisma.user.findUnique({
-      where: { userId: metadata?.userId },
+      where: { clerkId: metadata?.userId },
     });
     if (!user) throw new Error("User not found");
 
     // Update user's subscription status
     const updatedUser = await prisma.user.update({
-      where: { userId: metadata?.userId },
+      where: { clerkId: metadata?.userId },
       data: {
         subscriptionPlan: 'PREMIUM',
         subscriptionStatus: 'ACTIVE',

@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/select";
 import { PlusIcon } from "lucide-react";
 import { DraggableColumn } from "@/components/draggable-column";
-import { NewContentModal } from "@/components/new-content-modal";
 
 interface Task {
   id: string;
@@ -27,7 +26,6 @@ interface Task {
     avatar: string;
   };
   status: string;
-  progress: number;
 }
 
 interface ColumnData {
@@ -43,8 +41,7 @@ export default function ProjectDashboard() {
         description: "Draft script for new tech review",
         priority: "High",
         assignee: { name: "Sarah Johnson", avatar: "/placeholder.svg" },
-        status: "In Progress",
-        progress: 30,
+        status: "Due in 2 days",
       },
       {
         id: "2",
@@ -52,8 +49,7 @@ export default function ProjectDashboard() {
         description: "Create campaign storyline",
         priority: "High",
         assignee: { name: "Emma Davis", avatar: "/placeholder.svg" },
-        status: "Not Started",
-        progress: 0,
+        status: "Due tomorrow",
       },
     ],
     shooting: [
@@ -64,7 +60,6 @@ export default function ProjectDashboard() {
         priority: "Medium",
         assignee: { name: "Mike Chen", avatar: "/placeholder.svg" },
         status: "In Progress",
-        progress: 50,
       },
       {
         id: "4",
@@ -72,8 +67,7 @@ export default function ProjectDashboard() {
         description: "Film product features",
         priority: "Medium",
         assignee: { name: "Tom Miller", avatar: "/placeholder.svg" },
-        status: "Planning",
-        progress: 10,
+        status: "Starting next week",
       },
     ],
     editing: [
@@ -83,8 +77,7 @@ export default function ProjectDashboard() {
         description: "Final edits for weekly content",
         priority: "Low",
         assignee: { name: "Rachel Johnson", avatar: "/placeholder.svg" },
-        status: "In Progress",
-        progress: 70,
+        status: "70% Complete",
       },
       {
         id: "6",
@@ -92,8 +85,7 @@ export default function ProjectDashboard() {
         description: "Final cut review",
         priority: "Low",
         assignee: { name: "Alex Kim", avatar: "/placeholder.svg" },
-        status: "Review",
-        progress: 90,
+        status: "90% Complete",
       },
     ],
     publishing: [
@@ -103,8 +95,7 @@ export default function ProjectDashboard() {
         description: "Ready for publication",
         priority: "Scheduled",
         assignee: { name: "John Doe", avatar: "/placeholder.svg" },
-        status: "Final Check",
-        progress: 95,
+        status: "Tomorrow 9AM",
       },
       {
         id: "8",
@@ -112,8 +103,7 @@ export default function ProjectDashboard() {
         description: "Monthly digest",
         priority: "Scheduled",
         assignee: { name: "Mary Lee", avatar: "/placeholder.svg" },
-        status: "Drafting",
-        progress: 40,
+        status: "Next Monday",
       },
     ],
   });
@@ -153,7 +143,10 @@ export default function ProjectDashboard() {
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-2xl font-semibold">Project Overview</h1>
         <div className="flex gap-3">
-          <NewContentModal />
+          <Button className="bg-violet-600 hover:bg-violet-700">
+            <PlusIcon className="mr-2 h-4 w-4" />
+            New Content
+          </Button>
           <Select>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="All Projects" />
