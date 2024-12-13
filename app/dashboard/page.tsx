@@ -16,6 +16,7 @@ import {
 import { PlusIcon, Moon, Sun } from "lucide-react";
 import { DraggableColumn } from "@/components/draggable-column";
 import { NewContentModal } from "@/components/new-content-modal";
+import { VideoProductionModal } from "@/components/detail-modal";
 
 interface Task {
   id: string;
@@ -117,7 +118,6 @@ export default function ProjectDashboard() {
       },
     ],
   });
-
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
@@ -175,6 +175,7 @@ export default function ProjectDashboard() {
       {/* Header */}
       <div className="mb-6 flex flex-col items-start justify-between space-y-4 md:mb-8 md:flex-row md:items-center md:space-y-0">
         <h1 className="text-2xl font-semibold">Dashboard</h1>
+
         <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
           <NewContentModal />
           <div className="flex w-full gap-3 sm:w-auto">

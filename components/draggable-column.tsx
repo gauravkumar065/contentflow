@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 import { TaskDetailModal } from "./task-detail-modal";
+import { VideoProductionModal } from "./detail-modal";
 
 interface Task {
   id: string;
@@ -115,11 +116,12 @@ export function DraggableColumn({ title, tasks, id }: DraggableColumnProps) {
           )}
         </Droppable>
       </Card>
-      <TaskDetailModal
+      {/* <TaskDetailModal
         task={selectedTask}
         open={isModalOpen}
         onOpenChange={setIsModalOpen}
-      />
+      /> */}
+      <VideoProductionModal open={isModalOpen} onOpenChange={setIsModalOpen} />
     </div>
   );
 }
