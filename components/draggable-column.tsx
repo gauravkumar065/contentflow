@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { Droppable, Draggable } from "@hello-pangea/dnd";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
+import { TaskDetailModal } from "./task-detail-modal";
 
 interface Task {
   id: string;
@@ -24,10 +26,18 @@ interface DraggableColumnProps {
 }
 
 export function DraggableColumn({ title, tasks, id }: DraggableColumnProps) {
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleTaskClick = (task: Task) => {
+    setSelectedTask(task);
+    setIsModalOpen(true);
+  };
+
   return (
     <div className="space-y-4">
       <h2 className="text-lg font-semibold">{title}</h2>
-      <Card className="bg-gray-50 p-4">
+      <Card className="bg-gray-50 p-4 dark:bg-gray-800">
         <Droppable droppableId={id}>
           {(provided) => (
             <div
@@ -42,13 +52,14 @@ export function DraggableColumn({ title, tasks, id }: DraggableColumnProps) {
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
+                      onClick={() => handleTaskClick(task)}
                     >
-                      <Card className="bg-white">
+                      <Card className="cursor-pointer bg-white transition-shadow hover:shadow-md dark:bg-gray-700">
                         <CardContent className="p-4">
-                          <div className="mb-2 flex items-start justify-between">
-                            <div>
+                          <div className="mb-2 flex flex-col items-start justify-between sm:flex-row sm:items-center">
+                            <div className="mb-2 sm:mb-0">
                               <h3 className="font-medium">{task.title}</h3>
-                              <p className="text-sm text-gray-500">
+                              <p className="text-sm text-gray-500 dark:text-gray-400">
                                 {task.description}
                               </p>
                             </div>
@@ -60,12 +71,12 @@ export function DraggableColumn({ title, tasks, id }: DraggableColumnProps) {
                               }
                               className={`${
                                 task.priority === "High"
-                                  ? "bg-red-100 text-red-800 hover:bg-red-100"
+                                  ? "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
                                   : task.priority === "Medium"
-                                    ? "bg-yellow-100 text-yellow-800 hover:bg-yellow-100"
+                                    ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200"
                                     : task.priority === "Low"
-                                      ? "bg-green-100 text-green-800 hover:bg-green-100"
-                                      : "bg-blue-100 text-blue-800 hover:bg-blue-100"
+                                      ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+                                      : "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
                               }`}
                             >
                               {task.priority}
@@ -73,7 +84,7 @@ export function DraggableColumn({ title, tasks, id }: DraggableColumnProps) {
                           </div>
                           <div className="mt-4">
                             <div className="mb-1 flex items-center justify-between">
-                              <span className="text-sm text-gray-500">
+                              <span className="text-sm text-gray-500 dark:text-gray-400">
                                 {task.status}
                               </span>
                               <span className="text-sm font-medium">
@@ -104,6 +115,11 @@ export function DraggableColumn({ title, tasks, id }: DraggableColumnProps) {
           )}
         </Droppable>
       </Card>
+      <TaskDetailModal
+        task={selectedTask}
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+      />
     </div>
   );
 }

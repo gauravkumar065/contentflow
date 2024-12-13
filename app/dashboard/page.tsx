@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { PlusIcon } from "lucide-react";
+import { PlusIcon, Moon, Sun } from "lucide-react";
 import { DraggableColumn } from "@/components/draggable-column";
 import { NewContentModal } from "@/components/new-content-modal";
 
@@ -118,6 +118,29 @@ export default function ProjectDashboard() {
     ],
   });
 
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    const isDark = localStorage.getItem("darkMode") === "true";
+    setIsDarkMode(isDark);
+    if (isDark) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, []);
+
+  const toggleDarkMode = () => {
+    const newDarkMode = !isDarkMode;
+    setIsDarkMode(newDarkMode);
+    localStorage.setItem("darkMode", newDarkMode.toString());
+    if (newDarkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  };
+
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
 
@@ -148,38 +171,40 @@ export default function ProjectDashboard() {
   };
 
   return (
-    <div className="mx-auto max-w-[1400px] p-6">
+    <div className="mx-auto min-h-screen p-4 md:p-6 dark:bg-black dark:text-gray-100">
       {/* Header */}
-      <div className="mb-8 flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Project Overview</h1>
-        <div className="flex gap-3">
+      <div className="mb-6 flex flex-col items-start justify-between space-y-4 md:mb-8 md:flex-row md:items-center md:space-y-0">
+        <h1 className="text-2xl font-semibold">Dashboard</h1>
+        <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
           <NewContentModal />
-          <Select>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="All Projects" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Projects</SelectItem>
-              <SelectItem value="active">Active Projects</SelectItem>
-              <SelectItem value="completed">Completed Projects</SelectItem>
-            </SelectContent>
-          </Select>
-          <Select>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="All Team Members" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Team Members</SelectItem>
-              <SelectItem value="designers">Designers</SelectItem>
-              <SelectItem value="developers">Developers</SelectItem>
-            </SelectContent>
-          </Select>
+          <div className="flex w-full gap-3 sm:w-auto">
+            <Select>
+              <SelectTrigger className="w-full sm:w-[180px] dark:border-gray-700 dark:bg-gray-800">
+                <SelectValue placeholder="All Projects" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Projects</SelectItem>
+                <SelectItem value="active">Active Projects</SelectItem>
+                <SelectItem value="completed">Completed Projects</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select>
+              <SelectTrigger className="w-full sm:w-[180px] dark:border-gray-700 dark:bg-gray-800">
+                <SelectValue placeholder="All Team Members" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Team Members</SelectItem>
+                <SelectItem value="designers">Designers</SelectItem>
+                <SelectItem value="developers">Developers</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </div>
 
       {/* Project Columns */}
       <DragDropContext onDragEnd={onDragEnd}>
-        <div className="mb-8 grid grid-cols-4 gap-6">
+        <div className="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <DraggableColumn
             title="Scripting"
             tasks={columns.scripting}
@@ -204,9 +229,9 @@ export default function ProjectDashboard() {
       </DragDropContext>
 
       {/* Bottom Section */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {/* Team Activity */}
-        <Card>
+        <Card className="dark:border-gray-700 dark:bg-gray-800">
           <CardHeader>
             <CardTitle>Team Activity</CardTitle>
           </CardHeader>
@@ -219,10 +244,12 @@ export default function ProjectDashboard() {
                 </Avatar>
                 <div>
                   <p className="font-medium">Sarah Johnson</p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
                     Completed script review for Product Video
                   </p>
-                  <p className="text-sm text-gray-400">2 hours ago</p>
+                  <p className="text-sm text-gray-400 dark:text-gray-500">
+                    2 hours ago
+                  </p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -232,10 +259,12 @@ export default function ProjectDashboard() {
                 </Avatar>
                 <div>
                   <p className="font-medium">Mike Chen</p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
                     Started editing Tutorial Series footage
                   </p>
-                  <p className="text-sm text-gray-400">4 hours ago</p>
+                  <p className="text-sm text-gray-400 dark:text-gray-500">
+                    4 hours ago
+                  </p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -245,10 +274,12 @@ export default function ProjectDashboard() {
                 </Avatar>
                 <div>
                   <p className="font-medium">Emma Davis</p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
                     Scheduled social media posts for next week
                   </p>
-                  <p className="text-sm text-gray-400">Yesterday</p>
+                  <p className="text-sm text-gray-400 dark:text-gray-500">
+                    Yesterday
+                  </p>
                 </div>
               </div>
             </div>
@@ -256,7 +287,7 @@ export default function ProjectDashboard() {
         </Card>
 
         {/* Performance Metrics */}
-        <Card>
+        <Card className="dark:border-gray-700 dark:bg-gray-800">
           <CardHeader>
             <CardTitle>Performance Metrics</CardTitle>
           </CardHeader>
@@ -264,14 +295,16 @@ export default function ProjectDashboard() {
             <div>
               <div className="mb-2 flex justify-between">
                 <span className="text-sm font-medium">Completion Rate</span>
-                <span className="text-sm font-medium text-violet-600">85%</span>
+                <span className="text-sm font-medium text-violet-600 dark:text-violet-400">
+                  85%
+                </span>
               </div>
               <Progress value={85} className="h-2" />
             </div>
             <div>
               <div className="mb-2 flex justify-between">
                 <span className="text-sm font-medium">Team Velocity</span>
-                <span className="text-sm font-medium text-violet-600">
+                <span className="text-sm font-medium text-violet-600 dark:text-violet-400">
                   12 tasks/week
                 </span>
               </div>
@@ -279,7 +312,9 @@ export default function ProjectDashboard() {
             <div>
               <div className="mb-2 flex justify-between">
                 <span className="text-sm font-medium">Upcoming Deadlines</span>
-                <span className="text-sm font-medium text-violet-600">4</span>
+                <span className="text-sm font-medium text-violet-600 dark:text-violet-400">
+                  4
+                </span>
               </div>
             </div>
           </CardContent>

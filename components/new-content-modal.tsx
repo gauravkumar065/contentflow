@@ -30,31 +30,39 @@ export function NewContentModal() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-violet-600 hover:bg-violet-700">
+        <Button className="bg-violet-600 hover:bg-violet-700 dark:bg-violet-700 dark:hover:bg-violet-800">
           <PlusIcon className="mr-2 h-4 w-4" />
           New Content
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] dark:bg-gray-800 dark:text-gray-100">
         <DialogHeader>
           <DialogTitle>Add New Content</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <Label htmlFor="title">Title</Label>
-            <Input id="title" placeholder="Enter content title" />
+            <Input
+              id="title"
+              placeholder="Enter content title"
+              className="dark:border-gray-600 dark:bg-gray-700"
+            />
           </div>
           <div>
             <Label htmlFor="description">Description</Label>
-            <Input id="description" placeholder="Enter content description" />
+            <Input
+              id="description"
+              placeholder="Enter content description"
+              className="dark:border-gray-600 dark:bg-gray-700"
+            />
           </div>
           <div>
             <Label htmlFor="priority">Priority</Label>
             <Select>
-              <SelectTrigger>
+              <SelectTrigger className="dark:border-gray-600 dark:bg-gray-700">
                 <SelectValue placeholder="Select priority" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="dark:bg-gray-700">
                 <SelectItem value="high">High</SelectItem>
                 <SelectItem value="medium">Medium</SelectItem>
                 <SelectItem value="low">Low</SelectItem>
@@ -63,7 +71,11 @@ export function NewContentModal() {
           </div>
           <div>
             <Label htmlFor="status">Status</Label>
-            <Input id="status" placeholder="Enter current status" />
+            <Input
+              id="status"
+              placeholder="Enter current status"
+              className="dark:border-gray-600 dark:bg-gray-700"
+            />
           </div>
           <div>
             <Label htmlFor="progress">Progress</Label>
@@ -73,6 +85,7 @@ export function NewContentModal() {
               min="0"
               max="100"
               placeholder="Enter progress (0-100)"
+              className="dark:border-gray-600 dark:bg-gray-700"
             />
           </div>
           <Button type="submit" className="w-full">
