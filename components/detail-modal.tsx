@@ -20,6 +20,13 @@ import {
   Folder,
 } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Inter } from "next/font/google";
+
+// Initialize the font
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export function VideoProductionModal({
   open,
@@ -30,7 +37,9 @@ export function VideoProductionModal({
 }) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="flex max-h-[90vh] max-w-4xl flex-col overflow-hidden">
+      <DialogContent
+        className={`${inter.className} flex max-h-[90vh] max-w-4xl flex-col overflow-hidden`}
+      >
         <DialogHeader className="flex flex-row items-center justify-between space-x-4 space-y-0">
           <div className="flex items-center gap-3">
             <DialogTitle className="text-xl font-semibold">
@@ -43,9 +52,6 @@ export function VideoProductionModal({
               In Progress
             </Badge>
           </div>
-          <Button variant="ghost" className="text-gray-500">
-            <span className="sr-only">Close</span>×
-          </Button>
         </DialogHeader>
 
         <Tabs

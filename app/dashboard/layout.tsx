@@ -5,6 +5,13 @@ import { ReactNode } from "react";
 import DashboardSideBar from "./_components/dashboard-side-bar";
 import DashboardTopNav from "./_components/dashbord-top-nav";
 import config from "@/config";
+import { Inter } from "next/font/google";
+
+// Initialize the font
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export default async function DashboardLayout({
   children,
@@ -12,7 +19,9 @@ export default async function DashboardLayout({
   children: ReactNode;
 }) {
   return (
-    <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
+    <div
+      className={`${inter.className} grid min-h-screen w-full lg:grid-cols-[280px_1fr]`}
+    >
       <DashboardSideBar />
       <DashboardTopNav>
         <main style={{ flex: "1 1" }} className="flex flex-col">
