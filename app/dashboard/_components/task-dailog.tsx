@@ -18,12 +18,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { NewIdea } from "../page"; // Import the NewIdea type from Dashboard
 
 interface CreateTaskDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  onCreateTask: (task: NewIdea) => void;
+  onCreateTask: (task: any) => void;
   user: number; // Add userId prop
 }
 
@@ -33,7 +32,7 @@ const CreateTaskDialog: React.FC<CreateTaskDialogProps> = ({
   onCreateTask,
   user,
 }) => {
-  const [newIdea, setNewIdea] = useState<NewIdea>({
+  const [newIdea, setNewIdea] = useState<any>({
     user: user,
     title: "",
     description: "",
@@ -45,11 +44,11 @@ const CreateTaskDialog: React.FC<CreateTaskDialogProps> = ({
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
-    setNewIdea((prev) => ({ ...prev, [name]: value }));
+    setNewIdea((prev: any) => ({ ...prev, [name]: value }));
   };
 
   const handleSelectChange = (value: string) => {
-    setNewIdea((prev) => ({ ...prev, type: value }));
+    setNewIdea((prev: any) => ({ ...prev, type: value }));
   };
 
   const handleSubmit = () => {

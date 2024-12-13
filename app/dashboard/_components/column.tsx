@@ -2,10 +2,9 @@
 import React from "react";
 import { Droppable } from "@hello-pangea/dnd";
 import Task from "./task";
-import { ColumnData } from "../page";
 
 interface ColumnProps {
-  column: ColumnData;
+  column: any;
   color: string;
 }
 
@@ -21,7 +20,7 @@ const Column: React.FC<ColumnProps> = ({ column, color }) => {
           <h2 className="mb-4 font-semibold text-gray-800 dark:text-black">
             {column.title}
           </h2>
-          {column.tasks.map((task, index) => {
+          {column.tasks.map((task: any, index: any) => {
             return <Task key={task.id} task={task} index={index} />;
           })}
           {provided.placeholder}
